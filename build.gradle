@@ -1,0 +1,25 @@
+group 'demo'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.springframework:spring-context:$springVersion"
+    compile "org.springframework:spring-context-support:$springVersion"
+    compile "org.springframework:spring-jdbc:$springVersion"
+    compile "com.h2database:h2:$h2Version"
+    compile "javax.inject:javax.inject:1"
+
+    compile "net.sf.ehcache:ehcache:$ehcacheVersion"
+    compile "net.sf.ehcache:ehcache-jcache:$ehcacheJCacheVersion"
+
+    testCompile "junit:junit-dep:$junitVersion"
+    testCompile "org.springframework:spring-test:$springVersion"
+}
