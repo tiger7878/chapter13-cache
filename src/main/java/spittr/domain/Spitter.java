@@ -1,10 +1,12 @@
 package spittr.domain;
 
+import java.io.Serializable;
+
 /**
  * @author: monkey
  * @date: 2018/5/29 22:18
  */
-public class Spitter {
+public class Spitter implements Serializable {
 
     private Long id;
     private String username;

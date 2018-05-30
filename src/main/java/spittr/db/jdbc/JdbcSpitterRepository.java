@@ -1,6 +1,8 @@
 package spittr.db.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
@@ -32,6 +34,8 @@ public class JdbcSpitterRepository implements SpitterRepository {
         return jdbcTemplate.queryForLong("select count(id) from Spitter");
     }
 
+    //key 使用的是SpEL
+    @CachePut(value = "spitterCache",key = "#result.id")
     public Spitter save(Spitter spitter) {
         Long id = spitter.getId();
         if (id == null) {
@@ -83,6 +87,7 @@ public class JdbcSpitterRepository implements SpitterRepository {
                 spitter.isUpdateByEmail());
     }
 
+    @Cacheable("spitterCache")
     public Spitter findOne(long id) {
         return jdbcTemplate.queryForObject(
                 SELECT_SPITTER + " where id=?", new SpitterRowMapper(), id);
