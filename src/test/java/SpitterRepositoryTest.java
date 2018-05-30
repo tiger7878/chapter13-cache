@@ -27,8 +27,8 @@ public class SpitterRepositoryTest {
 
     @Test
     public void findOne(){
-//        assertEquals("mwalls",spitterRepository.findOne(2L).getUsername());
-        assertEquals("monkey",spitterRepository.findOne(5L).getUsername());
+        assertEquals("habuma",spitterRepository.findOne(4L).getUsername());
+//        assertEquals("monkey",spitterRepository.findOne(5L).getUsername());
     }
 
     @Test

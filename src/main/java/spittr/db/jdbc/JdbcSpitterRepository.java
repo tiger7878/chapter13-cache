@@ -87,7 +87,14 @@ public class JdbcSpitterRepository implements SpitterRepository {
                 spitter.isUpdateByEmail());
     }
 
-    @Cacheable("spitterCache")
+    //unless设置的SpEL表达式会检查返回的Spittle对象（在表达式中通过#result来识别）的message属性。
+    // 如果它包含“NoCache”文本内容，那么这个表达式的计算值为true，这个Spittle对象不会放进缓存中。
+    // 否则的话，表达式的计算结果为false，无法满足unless的条件，这个Spittle对象会被缓存
+
+    //condition肩负着在方法上禁用缓存的任务，因此它不能等到方法返回时再确定是否该关闭缓存。true时启用缓存，否则禁用缓存
+    @Cacheable(value = "spitterCache",
+    unless = "#result.fullName.contains('Craig Walls')",
+    condition = "#id>3")
     public Spitter findOne(long id) {
         return jdbcTemplate.queryForObject(
                 SELECT_SPITTER + " where id=?", new SpitterRowMapper(), id);
